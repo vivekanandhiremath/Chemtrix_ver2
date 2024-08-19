@@ -35,7 +35,6 @@ public class LoginPage {
     }
 
     public void clickOnLogin() {
-        loginbutton.click();
         utils.clickOnElement(loginbutton, EXPLICIT_WAIT_BASIC_TIME);
     }
 

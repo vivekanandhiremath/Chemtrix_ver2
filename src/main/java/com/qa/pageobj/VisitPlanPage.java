@@ -46,7 +46,7 @@ public class VisitPlanPage {
     }
 
     public void clickOnMyActivity() {
-        utils.clickOnElement(myactivitymenu, EXPLICIT_WAIT_BASIC_TIME);
+        utils.mouseHoverAndClick(myactivitymenu, EXPLICIT_WAIT_BASIC_TIME);
     }
 
     public void clickOnVisitPlanning() {
@@ -57,13 +57,11 @@ public class VisitPlanPage {
         utils.clickOnElement(createvisitplanningbutton, EXPLICIT_WAIT_BASIC_TIME);
     }
 
-    public void entervisitPlanningdetails(String customertype ,String customername, String phno, String email, String address, String visitdate, String visittime, String purposeofvisit, String remarks) {
-        if(customertype.equalsIgnoreCase("sl")){
+    public void entervisitPlanningdetails(String customertype, String customername, String phno, String email, String address, String visitdate, String visittime, String purposeofvisit, String remarks) {
+        if (customertype.equalsIgnoreCase("sl")) {
             searchCustomerName(customername);
-//        utils.typeTextIntoElement(customernametextfield, customername, EXPLICIT_WAIT_BASIC_TIME);
             utils.typeTextIntoElement(visitdatedatefield, visitdate, EXPLICIT_WAIT_BASIC_TIME);
-            utils.typeTextIntoElement(visittimetimefield, visittime, EXPLICIT_WAIT_BASIC_TIME);
-            utils.typeTextIntoElement(purposeofvisitdropdown, visittime, EXPLICIT_WAIT_BASIC_TIME);
+            utils.JavaScriptTimePick(visittimetimefield, visittime, EXPLICIT_WAIT_BASIC_TIME);
             selectPurposeOfVisit(purposeofvisit);
             utils.typeTextIntoElement(remarkstextfield, remarks, EXPLICIT_WAIT_BASIC_TIME);
 
@@ -74,7 +72,6 @@ public class VisitPlanPage {
             utils.typeTextIntoElement(addresstextfield, address, EXPLICIT_WAIT_BASIC_TIME);
             utils.typeTextIntoElement(visitdatedatefield, visitdate, EXPLICIT_WAIT_BASIC_TIME);
             utils.typeTextIntoElement(visittimetimefield, visittime, EXPLICIT_WAIT_BASIC_TIME);
-            utils.typeTextIntoElement(purposeofvisitdropdown, visittime, EXPLICIT_WAIT_BASIC_TIME);
             selectPurposeOfVisit(purposeofvisit);
             utils.typeTextIntoElement(remarkstextfield, remarks, EXPLICIT_WAIT_BASIC_TIME);
         }
@@ -89,7 +86,6 @@ public class VisitPlanPage {
         utils.clickOnElement(customernamedropdownoption, EXPLICIT_WAIT_BASIC_TIME);
 
     }
-
 
 
 }

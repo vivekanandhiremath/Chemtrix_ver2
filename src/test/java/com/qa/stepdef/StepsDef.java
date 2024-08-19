@@ -1,6 +1,7 @@
 package com.qa.stepdef;
 
 import com.qa.base.WebdriverManager;
+import com.qa.pageobj.HomePage;
 import com.qa.pageobj.LoginPage;
 import com.qa.pageobj.VisitPlanPage;
 import com.qa.utils.ConfigReader;
@@ -15,6 +16,7 @@ public class StepsDef {
     private WebDriver driver;
     private LoginPage lp;
     private VisitPlanPage vp;
+    private HomePage hp;
 
     @Given("user is on login page")
     public void userIsOnLoginPage() {
@@ -26,6 +28,7 @@ public class StepsDef {
         lp = new LoginPage(driver);
 
         vp = new VisitPlanPage(driver);
+        hp = new HomePage(driver);
 
     }
 
@@ -39,10 +42,11 @@ public class StepsDef {
         }
     }
 
-    @Then("user enter username as {string} and password as {string}")
-    public void userEnterUsernameAsAndPasswordAs(String username, String password) {
-//       Login login= new Login.LoginBuilder().setUsername(username).setPassword(password).build();
-//
+    @Then("user Logs in to the application")
+    public void userEnterUsernameAsAndPasswordAs() {
+
+        String username = prop.getProperty("gc_tsm_user");
+        String password = prop.getProperty("password");
         lp.enterUserName(username);
         lp.enterPassword(password);
         lp.clickOnLogin();
@@ -59,7 +63,14 @@ public class StepsDef {
     }
 
     @Then("^user fills the visit planning details with customer type (.*) customer name (.*), phone number (.*), email (.*), address (.*), visit date (.*), visit time (.*), purpose of visit (.*), and remarks (.*)$")
-    public void userFillsTheVisitPlanningDetailsWithCustomerTypeCustomertypeCustomerNameNamePhoneNumberPhnoEmailEmailAddressAddressVisitDateVisitdateVisitTimeVisisttimePurposeOfVisitPurposeAndRemarksRemarks(String customertype,String customername, String phno, String email, String address, String visitdate, String visittime, String purpose, String remarks) {
+    public void userFillsTheVisitPlanningDetailsWithCustomerTypeCustomertypeCustomerNameNamePhoneNumberPhnoEmailEmailAddressAddressVisitDateVisitdateVisitTimeVisisttimePurposeOfVisitPurposeAndRemarksRemarks(String customertype, String customername, String phno, String email, String address, String visitdate, String visittime, String purpose, String remarks) {
         vp.entervisitPlanningdetails(customertype, customername, phno, email, address, visitdate, visittime, purpose, remarks);
+
+
+    }
+
+    @Then("user logs out of application")
+    public void userLogsOutOfApplication() {
+        hp.clickOnLogout();
     }
 }
