@@ -33,6 +33,7 @@ public class BaseClass {
     public void tearDown(Scenario scenario) throws InterruptedException {
         String scenarioName = scenario.getName().replaceAll(" ", "_");
 
+
         if (scenario.isFailed()) {
             // Capture screenshot if the scenario fails
             byte[] srcScreenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
