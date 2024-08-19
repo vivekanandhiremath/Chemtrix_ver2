@@ -20,6 +20,47 @@ public class ElementUtils {
 
     }
 
+    // Method to extract the first code of a specified type after a given delimiter
+    public static String extractID(String sentence, String delimiter, CodeType codeType) {
+        int delimiterIndex = sentence.indexOf(delimiter);
+
+        if (delimiterIndex != -1) {
+            // Extract the part of the sentence after the delimiter
+            String afterDelimiter = sentence.substring(delimiterIndex + delimiter.length()).trim();
+
+            StringBuilder code = new StringBuilder();
+            boolean isCollecting = false;
+
+            for (int i = 0; i < afterDelimiter.length(); i++) {
+                char currentChar = afterDelimiter.charAt(i);
+
+                // Determine if the current character should be part of the code
+                boolean shouldAppend = false;
+                switch (codeType) {
+                    case NUMERIC:
+                        shouldAppend = Character.isDigit(currentChar);
+                        break;
+                    case ALPHABETIC:
+                        shouldAppend = Character.isLetter(currentChar);
+                        break;
+                    case ALPHANUMERIC:
+                        shouldAppend = Character.isLetterOrDigit(currentChar);
+                        break;
+                }
+
+                if (shouldAppend) {
+                    code.append(currentChar);
+                    isCollecting = true;
+                } else if (isCollecting) {
+                    // Stop if we have started collecting characters and hit a non-matching character
+                    break;
+                }
+            }
+            return code.toString();
+        }
+        return null; // Return null if no code is found
+    }
+
     public void clickOnElement(WebElement element, long durationInSeconds) {
 
         WebElement webElement = waitForElement(element, durationInSeconds);
@@ -128,7 +169,8 @@ public class ElementUtils {
 
         WebElement webElement = waitForVisibilityOfElement(element, durationInSeconds);
         Actions actions = new Actions(driver);
-        actions.moveToElement(webElement).click().build().perform();
+        actions.moveToElement(webElement).click()
+                .build().perform();
 
     }
 
@@ -170,17 +212,6 @@ public class ElementUtils {
 
     }
 
-    public boolean displayStatusOfElement(WebElement element, long durationInSeconds) {
-
-        try {
-            WebElement webElement = waitForVisibilityOfElement(element, durationInSeconds);
-            return webElement.isDisplayed();
-        } catch (Throwable e) {
-            return false;
-        }
-
-    }
-
     // public void DatePicking1(String day, String date, String month, String year,
     // long durationInSeconds) {
     // WebElement element;
@@ -195,6 +226,17 @@ public class ElementUtils {
     // }
     // }
     // }
+
+    public boolean displayStatusOfElement(WebElement element, long durationInSeconds) {
+
+        try {
+            WebElement webElement = waitForVisibilityOfElement(element, durationInSeconds);
+            return webElement.isDisplayed();
+        } catch (Throwable e) {
+            return false;
+        }
+
+    }
 
     public void DatePicking(WebElement element, long durationInSeconds) {
         WebElement dateWidget = waitForElement(element, durationInSeconds);
@@ -360,4 +402,34 @@ public class ElementUtils {
         }
         return outcome;
     }
+
+    //
+//    public static String extractVisitPlanningCVPNo(String sentence, String delimiter) {
+//        int delimiterIndex = sentence.indexOf(delimiter);
+//
+//        if (delimiterIndex != -1) {
+//            // Extract the part of the sentence after the delimiter
+//            String afterDelimiter = sentence.substring(delimiterIndex + delimiter.length()).trim();
+//
+//            // Find the first sequence of digits in the substring
+//            StringBuilder code = new StringBuilder();
+//            for (int i = 0; i < afterDelimiter.length(); i++) {
+//                char currentChar = afterDelimiter.charAt(i);
+//                if (Character.isDigit(currentChar)) {
+//                    code.append(currentChar);
+//                } else if (code.length() > 0) {
+//                    // Stop if we have already started collecting digits and hit a non-digit
+//                    break;
+//                }
+//            }
+//            return code.toString();
+//        }
+//        return null; // Return null if no code is found
+//    }
+    public enum CodeType {
+        ALPHANUMERIC,
+        NUMERIC,
+        ALPHABETIC
+    }
+
 }
