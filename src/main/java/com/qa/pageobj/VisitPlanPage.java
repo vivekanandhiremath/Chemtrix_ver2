@@ -116,7 +116,6 @@ public class VisitPlanPage {
         utils.clickOnElement(okbutton, EXPLICIT_WAIT_BASIC_TIME);
     }
 
-
 }
 
 
