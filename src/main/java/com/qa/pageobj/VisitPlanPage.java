@@ -54,6 +54,14 @@ public class VisitPlanPage {
 
     private Properties prop;
     private WritePropertyFiles writproperty;
+    @FindBy(xpath = "//select[@id='Dropdown Dashboard']")
+    private WebElement filterdropdown;
+    @FindBy(xpath = "//input[@id='search']")
+    private WebElement searchtextfield;
+    @FindBy(xpath = "//a[@href='/dashboard/visitplanning/view']")
+    private WebElement viewIcon;
+    @FindBy(xpath = "//button[@id='Approved']")
+    private WebElement approveButton;
 
     public VisitPlanPage(WebDriver rdriver) {
         this.ldriver = rdriver;
@@ -127,29 +135,18 @@ public class VisitPlanPage {
         utils.clickOnElement(okbutton, EXPLICIT_WAIT_BASIC_TIME);
     }
 
-
-
-    @FindBy(xpath="//select[@id='Dropdown Dashboard']") private WebElement filterdropdown;
-
-    @FindBy(xpath="//input[@id='search']") private WebElement searchtextfield;
-
-    public void filterAndSearchRecord(String filterby,String cvpno){
-        utils.selectOptionInDropdownByValue(filterdropdown,filterby,EXPLICIT_WAIT_BASIC_TIME);
-        utils.typeTextIntoElement(searchtextfield,cvpno,EXPLICIT_WAIT_BASIC_TIME);
-    }
-    @FindBy(xpath="//a[@href='/dashboard/visitplanning/view']") private WebElement viewIcon;
-
-
-    public void clickOnViewIcon(){
-        utils.clickOnElement(viewIcon,EXPLICIT_WAIT_BASIC_TIME);
+    public void filterAndSearchRecord(String filterby, String cvpno) {
+        utils.selectOptionInDropdownByValue(filterdropdown, filterby, EXPLICIT_WAIT_BASIC_TIME);
+        utils.typeTextIntoElement(searchtextfield, cvpno, EXPLICIT_WAIT_BASIC_TIME);
     }
 
-    @FindBy(xpath = "//button[@id='Approved']")
-    private WebElement approveButton;
+    public void clickOnViewIcon() {
+        utils.clickOnElement(viewIcon, EXPLICIT_WAIT_BASIC_TIME);
+    }
 
-    public void clickOnApproveButton(){
-        utils.clickOnElement(approveButton,EXPLICIT_WAIT_BASIC_TIME);
-        utils.clickOnElement(okbutton,EXPLICIT_WAIT_BASIC_TIME);
+    public void clickOnApproveButton() {
+        utils.clickOnElement(approveButton, EXPLICIT_WAIT_BASIC_TIME);
+        utils.clickOnElement(okbutton, EXPLICIT_WAIT_BASIC_TIME);
     }
 }
 

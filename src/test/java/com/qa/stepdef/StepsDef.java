@@ -1,19 +1,18 @@
 package com.qa.stepdef;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.qa.base.WebdriverManager;
 import com.qa.pageobj.HomePage;
 import com.qa.pageobj.LoginPage;
 import com.qa.pageobj.VisitPlanPage;
-import com.qa.utils.CommonUtils;
 import com.qa.utils.PropertyReader;
-import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 import java.util.Properties;
-
-import static com.qa.utils.CommonUtils.setScenario;
 
 public class StepsDef {
     private Properties read;
@@ -23,7 +22,7 @@ public class StepsDef {
     private VisitPlanPage vp;
     private HomePage hp;
     // The constructor for dependency injection
-
+    private ExtentTest scenarioTest;
 
     @Given("user is on login page")
     public void userIsOnLoginPage() {
@@ -31,25 +30,28 @@ public class StepsDef {
         read = PropertyReader.getInstance("config").getProperties();
 
 
-
         driver = WebdriverManager.getInstance(read.getProperty("browser")).getDriver();
         lp = new LoginPage(driver);
 
         vp = new VisitPlanPage(driver);
         hp = new HomePage(driver);
-    }
+        String actualValue = driver.getTitle();
+        String expectedValue = "Chemtirix";
 
-    @Then("user enter username as {string}")
-    public void userEnterUsernameAs(String username) {
-        lp.enterUserName(username);
         try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Assert.assertEquals(actualValue, expectedValue, "Page didn't navigate to the Chemtirix application");
+            if (scenarioTest != null) {
+                scenarioTest.log(Status.PASS, "Assertion passed: Value is " + actualValue);
+            }
+        } catch (AssertionError e) {
+            if (scenarioTest != null) {
+                scenarioTest.log(Status.FAIL, "Assertion failed: " + e.getMessage());
+            }
         }
     }
 
-    @Then("user Logs in to the application")
+
+    @Then("TSM user Logs in to the application")
     public void userEnterUsernameAsAndPasswordAs() {
         // Using the Scenario object is fine, and it won't throw an error
 
@@ -58,6 +60,9 @@ public class StepsDef {
         lp.enterUserName(username);
         lp.enterPassword(password);
         lp.clickOnLogin();
+        boolean text = hp.checkOnDashboard();
+        Assert.assertTrue(text, "Login was not successful : Dashboard not displayed ");
+
     }
 
 
@@ -85,15 +90,15 @@ public class StepsDef {
 
     @Then("user navigates to visit planning dashboard")
     public void userNavigatesToVisitPlanningDashboard() {
-    hp.clickOnActivityMenu();
-    vp.clickOnVisitPlanning();
+        hp.clickOnActivityMenu();
+        vp.clickOnVisitPlanning();
     }
 
 
     @Then("^user filter record as (.*) for cvpno as (.*) and click on view button")
-    public void userFilterRecordAsFiltertypeForCvpnoAsCvpnoAndClickOnViewButton(String filterby,String cvpno) {
-         readcvpno = PropertyReader.getInstance("cvpno").getProperties();
-        vp.filterAndSearchRecord(filterby,readcvpno.getProperty("cvpno"));
+    public void userFilterRecordAsFiltertypeForCvpnoAsCvpnoAndClickOnViewButton(String filterby, String cvpno) {
+        readcvpno = PropertyReader.getInstance("cvpno").getProperties();
+        vp.filterAndSearchRecord(filterby, readcvpno.getProperty("cvpno"));
         vp.clickOnViewIcon();
 
     }
