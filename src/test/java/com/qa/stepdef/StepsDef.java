@@ -6,6 +6,7 @@ import com.qa.base.WebdriverManager;
 import com.qa.pageobj.HomePage;
 import com.qa.pageobj.LoginPage;
 import com.qa.pageobj.VisitPlanPage;
+import com.qa.utils.LoginCredentials;
 import com.qa.utils.PropertyReader;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,6 +24,7 @@ public class StepsDef {
     private HomePage hp;
     // The constructor for dependency injection
     private ExtentTest scenarioTest;
+    private LoginCredentials credentials;
 
     @Given("user is on login page")
     public void userIsOnLoginPage() {
@@ -118,5 +120,14 @@ public class StepsDef {
         vp.clickOnApproveButton();
 
         hp.clickOnLogout();
+    }
+
+    @Then("^user logs in to application (.*)$")
+    public void userLogsInToApplication(String key) {
+    credentials=new LoginCredentials(key);
+        String username = credentials.getUsername();
+        String password=credentials.getPassword();
+
+        System.out.println(username+" "+password);
     }
 }
