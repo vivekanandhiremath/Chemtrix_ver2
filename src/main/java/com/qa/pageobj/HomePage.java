@@ -22,6 +22,8 @@ public class HomePage {
     private WebElement logoutButton;
     @FindBy(xpath = "//p[@class='block antialiased font-sans text-xs font-semibold capitalize text-primary'][normalize-space()='My Activity']")
     private WebElement myactivitymenu;
+    @FindBy(xpath = "//div[@class='capitalize']")
+    private WebElement welcometxt;
 
     public HomePage(WebDriver rdriver) {
         this.ldriver = rdriver;
@@ -40,4 +42,8 @@ public class HomePage {
         utils.mouseHoverAndClick(myactivitymenu, EXPLICIT_WAIT_BASIC_TIME);
     }
 
+    public boolean checkOnDashboard() {
+        boolean text = utils.displayStatusOfElement(welcometxt, EXPLICIT_WAIT_BASIC_TIME);
+        return text;
+    }
 }

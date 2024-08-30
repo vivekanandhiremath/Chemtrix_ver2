@@ -1,7 +1,6 @@
 package com.qa.stepdef;
 
 import com.qa.base.WebdriverManager;
-import com.qa.utils.CommonUtils;
 import com.qa.utils.PropertyReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -22,8 +21,7 @@ public class BaseClass {
     private Properties prop;
 
     @Before
-    public void setup(Scenario scene) {
-        CommonUtils.setScenario(scene);
+    public void setup(Scenario scenario) {
         // Load properties using the Singleton instance
         prop = PropertyReader.getInstance("config").getProperties();
 
@@ -35,16 +33,22 @@ public class BaseClass {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(IMPLICIT_WAIT_TIME));
 
         driver.get(prop.getProperty("url"));
+
+
     }
 
     @After
     public void tearDown(Scenario scenario) throws InterruptedException {
+
+
         String scenarioName = scenario.getName().replaceAll(" ", "_");
 
         if (scenario.isFailed()) {
             // Capture screenshot if the scenario fails
             byte[] srcScreenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
             scenario.attach(srcScreenshot, "image/png", scenarioName);
+
+
         }
 
         // Quit the browser after the scenario

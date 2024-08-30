@@ -212,20 +212,20 @@ public class ElementUtils {
 
     }
 
-    // public void DatePicking1(String day, String date, String month, String year,
-    // long durationInSeconds) {
-    // WebElement element;
-    // WebElement dateWidget = waitForElement(element, durationInSeconds);
-    // List<WebElement> columns =
-
-    // for (WebElement cell : columns) {
-    // // Select 13th Date
-    // if (cell.getText().equals("13")) {
-    // cell.findElement(By.linkText("13")).click();
-    // break;
-    // }
-    // }
-    // }
+//     public void DatePicking1(String day, String date, String month, String year,
+//     long durationInSeconds) {
+//     WebElement element;
+//     WebElement dateWidget = waitForElement(element, durationInSeconds);
+//     List<WebElement> columns =
+//
+//     for (WebElement cell : columns) {
+//     // Select 13th Date
+//     if (cell.getText().equals("13")) {
+//     cell.findElement(By.linkText("13")).click();
+//     break;
+//     }
+//     }
+//     }
 
     public boolean displayStatusOfElement(WebElement element, long durationInSeconds) {
 
