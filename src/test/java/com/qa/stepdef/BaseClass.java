@@ -1,6 +1,7 @@
 package com.qa.stepdef;
 
 import com.qa.base.WebdriverManager;
+import com.qa.utils.CommonUtils;
 import com.qa.utils.PropertyReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -21,11 +22,11 @@ public class BaseClass {
     private Properties prop;
 
     @Before
-    public void setup() {
+    public void setup(Scenario scene) {
+        CommonUtils.setScenario(scene);
         // Load properties using the Singleton instance
         prop = PropertyReader.getInstance("config").getProperties();
 
-        // Initialize the WebDriver using the browser property
         driver = WebdriverManager.getInstance(prop.getProperty("browser")).getDriver();
 
         // Maximize the browser window and navigate to the URL
@@ -47,6 +48,6 @@ public class BaseClass {
         }
 
         // Quit the browser after the scenario
-//        WebdriverManager.quitBrowser();
+        WebdriverManager.quitBrowser();
     }
 }

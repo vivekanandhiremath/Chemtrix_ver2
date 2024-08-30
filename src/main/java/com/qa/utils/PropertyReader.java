@@ -66,8 +66,8 @@ public class PropertyReader {
         switch (context) {
             case "config":
                 return System.getProperty("user.dir") + "/config.properties";
-            case "prod":
-                return System.getProperty("user.dir") + "/prod-config.properties";
+            case "cvpno":
+                return System.getProperty("user.dir") + "/cvpno.properties";
             default:
                 return System.getProperty("user.dir") + "/default-config.properties";
         }

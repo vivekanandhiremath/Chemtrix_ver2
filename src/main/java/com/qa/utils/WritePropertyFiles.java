@@ -23,7 +23,7 @@ public class WritePropertyFiles {
         }
     }
 
-    public static void writeToPropertyFile(String context, Map<String, String> properties) throws IOException {
+    private static void writeToPropertyFile(String context, Map<String, String> properties) throws IOException {
         String filePath = getFilePath(context);
         Path path = Paths.get(filePath);
         // Ensure the directory exists
@@ -44,7 +44,6 @@ public class WritePropertyFiles {
         try {
             Map<String, String> propertyMap = new HashMap<>();
             propertyMap.put(attribute, value);
-
             writeToPropertyFile(context, propertyMap);
         } catch (IOException e) {
             e.printStackTrace();

@@ -54,6 +54,7 @@ public class VisitPlanPage {
 
     private Properties prop;
     private WritePropertyFiles writproperty;
+
     public VisitPlanPage(WebDriver rdriver) {
         this.ldriver = rdriver;
         PageFactory.initElements(ldriver, this);
@@ -91,6 +92,16 @@ public class VisitPlanPage {
             utils.typeTextIntoElement(visittimetimefield, visittime, EXPLICIT_WAIT_BASIC_TIME);
             selectPurposeOfVisit(purposeofvisit);
             utils.typeTextIntoElement(remarkstextfield, remarks, EXPLICIT_WAIT_BASIC_TIME);
+        } else {
+            utils.typeTextIntoElement(customernametextfield, customername, EXPLICIT_WAIT_BASIC_TIME);
+            utils.typeTextIntoElement(phonenumbernumfield, phno, EXPLICIT_WAIT_BASIC_TIME);
+            utils.typeTextIntoElement(emailtextfield, email, EXPLICIT_WAIT_BASIC_TIME);
+            utils.typeTextIntoElement(addresstextfield, address, EXPLICIT_WAIT_BASIC_TIME);
+            utils.typeTextIntoElement(visitdatedatefield, visitdate, EXPLICIT_WAIT_BASIC_TIME);
+            utils.typeTextIntoElement(visittimetimefield, visittime, EXPLICIT_WAIT_BASIC_TIME);
+            selectPurposeOfVisit(purposeofvisit);
+            utils.typeTextIntoElement(remarkstextfield, remarks, EXPLICIT_WAIT_BASIC_TIME);
+
         }
     }
 
@@ -116,6 +127,30 @@ public class VisitPlanPage {
         utils.clickOnElement(okbutton, EXPLICIT_WAIT_BASIC_TIME);
     }
 
+
+
+    @FindBy(xpath="//select[@id='Dropdown Dashboard']") private WebElement filterdropdown;
+
+    @FindBy(xpath="//input[@id='search']") private WebElement searchtextfield;
+
+    public void filterAndSearchRecord(String filterby,String cvpno){
+        utils.selectOptionInDropdownByValue(filterdropdown,filterby,EXPLICIT_WAIT_BASIC_TIME);
+        utils.typeTextIntoElement(searchtextfield,cvpno,EXPLICIT_WAIT_BASIC_TIME);
+    }
+    @FindBy(xpath="//a[@href='/dashboard/visitplanning/view']") private WebElement viewIcon;
+
+
+    public void clickOnViewIcon(){
+        utils.clickOnElement(viewIcon,EXPLICIT_WAIT_BASIC_TIME);
+    }
+
+    @FindBy(xpath = "//button[@id='Approved']")
+    private WebElement approveButton;
+
+    public void clickOnApproveButton(){
+        utils.clickOnElement(approveButton,EXPLICIT_WAIT_BASIC_TIME);
+        utils.clickOnElement(okbutton,EXPLICIT_WAIT_BASIC_TIME);
+    }
 }
 
 
