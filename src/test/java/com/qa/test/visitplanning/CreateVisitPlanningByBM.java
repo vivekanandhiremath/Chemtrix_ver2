@@ -1,4 +1,4 @@
-package com.qa.test;
+package com.qa.test.visitplanning;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
