@@ -33,12 +33,12 @@ public class CustomCucumberReportListener implements ConcurrentEventListener {
         }
 
         // Ensure featureTest is not null before creating scenarioTest
-        if (featureTest != null) {
-            scenarioTest = featureTest.createNode(scenarioName);
-        } else {
-            // Handle the case where featureTest is null (shouldn't usually happen if initialization is correct)
-            System.err.println("Feature test is not initialized. Scenario test cannot be created.");
-        }
+//        if (featureTest != null) {
+        scenarioTest = featureTest.createNode(scenarioName);
+//        } else {
+        // Handle the case where featureTest is null (shouldn't usually happen if initialization is correct)
+//            System.err.println("Feature test is not initialized. Scenario test cannot be created.");
+//        }
     }
 
 

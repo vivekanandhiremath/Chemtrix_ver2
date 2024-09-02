@@ -1,7 +1,9 @@
 Feature: VisitPlanning
-Background:
-  Given user is on login page
-  @CreateVisitPlanningByTSM
+
+  Background:
+    Given user is on login page
+
+  @CreateVisitPlanningByTSM @smoke
   Scenario Outline: Checking the functionality Create visit planning
     Then TSM user Logs in to the application
     Then user navigates to visit planning dashboard and click on create vsisit planning button
@@ -12,7 +14,7 @@ Background:
       | sl           | 2100         | 1234567890 | Vivekananda@gmail.com | Coimbatore | 30/08/2024 | 20:30     | Salesorder     | Remarks |
 
 
-  @ApproveVisitPlanningByBM
+  @ApproveVisitPlanningByBM @smoke
   Scenario Outline: Checking the functionality of Approving the Visit Plan by BM
     Then BM Logs in to the application
     Then user navigates to visit planning dashboard
@@ -22,7 +24,7 @@ Background:
       | filtertype | cvpno |
       | cvpno      | 6171  |
 
-  @CreateVisitPlanningByBM
+  @CreateVisitPlanningByBM @smoke
   Scenario Outline: Checking the functionality Create visit planning
     Then BM Logs in to the application
     Then user navigates to visit planning dashboard and click on create vsisit planning button

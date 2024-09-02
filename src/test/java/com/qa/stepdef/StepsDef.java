@@ -3,6 +3,7 @@ package com.qa.stepdef;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.qa.base.WebdriverManager;
+import com.qa.pageobj.CheckInCheckOut;
 import com.qa.pageobj.HomePage;
 import com.qa.pageobj.LoginPage;
 import com.qa.pageobj.VisitPlanPage;
@@ -22,9 +23,9 @@ public class StepsDef {
     private LoginPage lp;
     private VisitPlanPage vp;
     private HomePage hp;
-    // The constructor for dependency injection
     private ExtentTest scenarioTest;
     private LoginCredentials credentials;
+    private CheckInCheckOut cicop;
 
     @Given("user is on login page")
     public void userIsOnLoginPage() {
@@ -37,6 +38,7 @@ public class StepsDef {
 
         vp = new VisitPlanPage(driver);
         hp = new HomePage(driver);
+        cicop = new CheckInCheckOut(driver);
         String actualValue = driver.getTitle();
         String expectedValue = "Chemtirix";
 
@@ -124,10 +126,27 @@ public class StepsDef {
 
     @Then("^user logs in to application (.*)$")
     public void userLogsInToApplication(String key) {
-    credentials=new LoginCredentials(key);
+        credentials = new LoginCredentials(key);
         String username = credentials.getUsername();
-        String password=credentials.getPassword();
+        String password = credentials.getPassword();
 
-        System.out.println(username+" "+password);
+        System.out.println(username + " " + password);
     }
+
+
+    /////////////////////////////////CheckInCheckOut////////////////////////////////////////////
+
+
+    @Then("user naviagtes to CheckinCheckout page")
+    public void UserNavigatesToCheckInCheckoutPage() {
+        hp.navigateToCheckInCheckOut();
+
+    }
+
+    @Then("^user selects the visittype as (.*) and click on office in$")
+    public void userselectThevisistType(String visittype) {
+        cicop.selectVisittype(visittype);
+    }
+
+
 }

@@ -24,6 +24,8 @@ public class HomePage {
     private WebElement myactivitymenu;
     @FindBy(xpath = "//div[@class='capitalize']")
     private WebElement welcometxt;
+    @FindBy(xpath = "//p[normalize-space()='Check In/Check Out']")
+    private WebElement checkInCheckOutmenu;
 
     public HomePage(WebDriver rdriver) {
         this.ldriver = rdriver;
@@ -46,4 +48,11 @@ public class HomePage {
         boolean text = utils.displayStatusOfElement(welcometxt, EXPLICIT_WAIT_BASIC_TIME);
         return text;
     }
+
+    public void navigateToCheckInCheckOut() {
+        clickOnActivityMenu();
+        utils.clickOnElement(checkInCheckOutmenu, EXPLICIT_WAIT_BASIC_TIME);
+    }
+
+
 }

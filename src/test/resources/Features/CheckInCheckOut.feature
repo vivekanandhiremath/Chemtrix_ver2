@@ -1,10 +1,15 @@
-Feature: CheckInCheckOut
-Background:
-  Given user is on login page
-  Scenario Outline:
-    Then TSM user Logs in to the application
+Feature:
 
+  Background:
+    Given user is on login page
+
+  @OfficIn
+  Scenario Outline: Check the functionality of the CheckInCheckOut
+    Then TSM user Logs in to the application
+    Then user naviagtes to CheckinCheckout page
+    Then user selects the visittype as <visittype> and click on office in
 
     Examples:
-      |  |
+      | visittype    |
+      | office visit |
 
