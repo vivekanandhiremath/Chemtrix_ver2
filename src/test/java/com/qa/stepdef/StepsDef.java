@@ -148,5 +148,10 @@ public class StepsDef {
         cicop.selectVisittype(visittype);
     }
 
+    @Then("user clicks on officein")
+    public void userClicksOnOfficeIN() {
+        cicop.clickOnOfficeIn();
+
+    }
 
 }

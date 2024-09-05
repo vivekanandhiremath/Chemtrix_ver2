@@ -41,8 +41,18 @@ public class CheckInCheckOut {
     }
 
     public void clickOnOfficeIn() {
-        utils.clickOnElement(officeINbutton, EXPLICIT_WAIT_BASIC_TIME);
-        utils.clickOnElement(okbutton, EXPLICIT_WAIT_BASIC_TIME);
+
+        boolean result = utils.checkElementIsEnabled(officeINbutton, EXPLICIT_WAIT_BASIC_TIME);
+        System.out.println(result);
+
+        if (result == false) {
+            utils.clickOnElement(officeINbutton, EXPLICIT_WAIT_BASIC_TIME);
+            utils.clickOnElement(okbutton, EXPLICIT_WAIT_BASIC_TIME);
+        } else {
+            System.out.println("since the user already is checked into office now user is checking out of office");
+            clickOnOfficeOut();
+        }
+
 
     }
 
@@ -50,6 +60,7 @@ public class CheckInCheckOut {
     public void clickOnOfficeOut() {
         utils.clickOnElement(officeOutButton, EXPLICIT_WAIT_BASIC_TIME);
         utils.clickOnElement(okbutton, EXPLICIT_WAIT_BASIC_TIME);
+
 
     }
 

@@ -403,6 +403,13 @@ public class ElementUtils {
         return outcome;
     }
 
+    public boolean checkElementIsEnabled(WebElement element, long durationInSeconds) {
+        WebElement webElement = waitForVisibilityOfElement(element, durationInSeconds);
+
+        boolean result = webElement.isEnabled();
+        return result;
+    }
+
     //
 //    public static String extractVisitPlanningCVPNo(String sentence, String delimiter) {
 //        int delimiterIndex = sentence.indexOf(delimiter);
