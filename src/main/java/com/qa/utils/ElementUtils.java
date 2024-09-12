@@ -410,6 +410,27 @@ public class ElementUtils {
         return result;
     }
 
+    public boolean isElementClickable(WebElement element, long durationInSeconds) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(durationInSeconds));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            return true;  // Element is clickable
+        } catch (TimeoutException e) {
+            return false; // Element is not clickable within the specified time
+        }
+    }
+
+    public String javascriptGetText(List<WebElement> elements, long durationInSeconds) {
+        List<WebElement> webelements = waitForWebelements(elements, durationInSeconds);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Execute JavaScript to get the text from the element
+        String text = (String) js.executeScript("return arguments[0].textContent;", webelements);
+
+        return text;
+    }
+
+
     //
 //    public static String extractVisitPlanningCVPNo(String sentence, String delimiter) {
 //        int delimiterIndex = sentence.indexOf(delimiter);
