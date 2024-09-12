@@ -3,8 +3,6 @@ package com.qa.pageobj;
 import com.qa.utils.ElementUtils;
 import com.qa.utils.PropertyReader;
 import com.qa.utils.WritePropertyFiles;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -63,8 +61,7 @@ public class CheckInCheckOut {
         } else if (!isOfficeOutDisabled) {
             // Click the "Office OUT" button if "Office IN" is disabled and "Office OUT" is enabled
             System.out.println("Office IN button is disabled. Clicking on Office OUT button.");
-            officeOutButton.click();
-            utils.clickOnElement(okbutton, EXPLICIT_WAIT_BASIC_TIME);
+            clickOnOfficeOut();
         } else {
             // Both buttons are disabled
             System.out.println("Both Office IN and Office OUT buttons are disabled.");

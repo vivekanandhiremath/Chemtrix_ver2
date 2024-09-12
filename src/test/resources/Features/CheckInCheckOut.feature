@@ -9,6 +9,7 @@ Feature:
     Then user naviagtes to CheckinCheckout page
     Then user selects the visittype as <visittype> and click on office in
     Then user clicks on officein
+    Then user logs out of application
     Examples:
       | visittype    |
       | office visit |

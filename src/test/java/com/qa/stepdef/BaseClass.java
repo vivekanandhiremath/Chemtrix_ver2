@@ -52,6 +52,6 @@ public class BaseClass {
         }
 
         // Quit the browser after the scenario
-//        WebdriverManager.quitBrowser();
+        WebdriverManager.quitBrowser();
     }
 }
