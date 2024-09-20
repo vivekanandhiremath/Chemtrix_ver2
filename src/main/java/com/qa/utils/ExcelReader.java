@@ -61,7 +61,7 @@ public class ExcelReader {
 
                 if (headerCell != null && dataCell != null) {
                     String header = headerCell.getStringCellValue();
-                    String value = dataCell.getStringCellValue();
+                    String value = getCellValueAsString(dataCell);
                     data.put(header, value);
                 }
             }
@@ -71,5 +71,20 @@ public class ExcelReader {
         }
 
         return data;
+    }
+
+    private String getCellValueAsString(Cell cell) {
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case NUMERIC:
+                return String.valueOf((int) cell.getNumericCellValue());
+            case BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            case FORMULA:
+                return cell.getCellFormula();
+            default:
+                return "";
+        }
     }
 }
