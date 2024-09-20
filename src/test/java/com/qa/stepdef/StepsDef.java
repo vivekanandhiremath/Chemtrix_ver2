@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.qa.base.WebdriverManager;
 import com.qa.pageobj.*;
+import com.qa.utils.ApiLogoutAndLogin;
 import com.qa.utils.ExcelReader;
 import com.qa.utils.LoginCredentials;
 import com.qa.utils.PropertyReader;
@@ -12,7 +13,6 @@ import io.cucumber.java.en.Then;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-import java.util.Map;
 import java.util.Properties;
 
 public class StepsDef {
@@ -25,8 +25,7 @@ public class StepsDef {
     private ExtentTest scenarioTest;
     private LoginCredentials credentials;
     private CheckInCheckOut cicop;
-    private ExcelReader excelReader;
-
+    private ExcelReader excelReader = new ExcelReader();
     @Given("user is on login page")
     public void userIsOnLoginPage() {
 
@@ -56,47 +55,8 @@ public class StepsDef {
 
     @Then("^user Enters username and password from (.*)$")
     public void UserEntersUsernameAndPassword(String key) {
-        excelReader = new ExcelReader();
-        Map<String, String> loginData = excelReader.getRowData(key);
-        String username = loginData.get("Username");
-        String password = loginData.get("Password");
-        lp.enterUserName(username);
-        lp.enterPassword(password);
-        lp.clickOnLogin();
-
-        boolean check = lp.isUserAlreadyLoggedInPopupDisplayed();
-        System.out.println(check);
-        if (check == true) {
-            // If the popup appears, log out the user via API
-            ApiLogout apiLogout = new ApiLogout();
-            String response = apiLogout.logoutUser(username);
-
-            if (response != null) {
-                System.out.println("User logged out via API.");
-
-                // Optional wait to ensure session is cleared
-                try {
-                    Thread.sleep(2000); // Wait for 2 seconds (adjust as needed)
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-
-                // Log status in Extent Report
-                if (scenarioTest != null) {
-                    scenarioTest.log(Status.INFO, "User was already logged in. Logged out successfully for user: " + username);
-                }
-
-                lp.clickOnPopUpOKButton();
-
-                // Retry login after successful logout
-                lp.enterUserName(username);
-                lp.enterPassword(password);
-                lp.clickOnLogin();
-                System.out.println("Retrying login after logout.");
-            } else {
-                System.out.println("Logout was not successful, cannot retry login.");
-            }
-        }
+        ApiLogoutAndLogin apiLogoutAndLogin = new ApiLogoutAndLogin(lp, excelReader, key);
+        apiLogoutAndLogin.handleLogin();
     }
 
 ///////////////////////////////
@@ -108,12 +68,12 @@ public class StepsDef {
 
         String username = read.getProperty("gc_tsm_user");
         String password = read.getProperty("password");
-        lp.enterUserName(username);
-        lp.enterPassword(password);
-        lp.clickOnLogin();
+
+        ApiLogoutAndLogin apiLogoutAndLogin = new ApiLogoutAndLogin(lp, username, password);
+        apiLogoutAndLogin.handleLogin();
+
         boolean text = hp.checkOnDashboard();
         Assert.assertTrue(text, "Login was not successful : Dashboard not displayed ");
-
     }
 
 
@@ -159,9 +119,12 @@ public class StepsDef {
 
         String username = read.getProperty("bm_user");
         String password = read.getProperty("password");
-        lp.enterUserName(username);
-        lp.enterPassword(password);
-        lp.clickOnLogin();
+        ApiLogoutAndLogin apiLogoutAndLogin = new ApiLogoutAndLogin(lp, username, password);
+        apiLogoutAndLogin.handleLogin();
+
+        boolean text = hp.checkOnDashboard();
+        Assert.assertTrue(text, "Login was not successful : Dashboard not displayed ");
+
     }
 
     @Then("user approves the visit plan")
