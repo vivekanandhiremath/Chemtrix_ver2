@@ -23,7 +23,6 @@ public class ElementUtils {
     // Method to extract the first code of a specified type after a given delimiter
     public static String extractID(String sentence, String delimiter, CodeType codeType) {
         int delimiterIndex = sentence.indexOf(delimiter);
-
         if (delimiterIndex != -1) {
             // Extract the part of the sentence after the delimiter
             String afterDelimiter = sentence.substring(delimiterIndex + delimiter.length()).trim();
